@@ -1,0 +1,73 @@
+<html>
+<head>
+</head>
+    
+<body>
+
+<p id="demo"></p>
+
+<script>
+    window.onload = function myFunction() {
+        var data = JSON.parse(getData());
+        for (var i = 0; i < data.expressions.length; i++) {
+            document.getElementById("demo").innerHTML += data.expressions[i] + '<br>';
+            document.getElementById("demo").innerHTML += calculate(data.expressions[i]) + '<br>';
+        }
+    }
+        function getData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", 'https://www.eliftech.com/school-task', false)
+            xhr.send();
+            if (xhr.status != 200) {
+                alert(xhr.status + ': ' + xhr.statusText);
+            } else {
+                return xhr.responseText;
+            }
+        }
+        function calculate(str)
+        {
+            var item = str.split(" ");
+            var stack = [];
+            for (var i = 0; i < item.length; i++) {
+                if (isNumber(item[i]))
+                {
+                    stack.push(Number(item[i]));
+                }
+                else
+                {
+                    b = stack.pop();
+                    a = stack.pop();
+                    switch (item[i]) {
+                        case '+':
+                            stack.push(Number(a - b));
+                            break;
+                        case '-':
+                            stack.push(Number(a + b + 8));
+                            break;
+                        case '*':
+                        if (b == 0) {
+                            stack.push(42);
+                        }
+                        else {
+                            stack.push(Number(a % b));
+                        }
+                            break;
+                        case '/':
+                        if (b == 0) {
+                            stack.push(42);
+                        }
+                        else {
+                            stack.push(Math.floor(Number(a / b)));
+                        }
+                            break;
+                    }
+                }
+            }
+            return stack[0];
+        }
+        function isNumber(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+</script>
+</body>
+</html>
