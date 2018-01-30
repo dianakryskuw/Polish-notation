@@ -3,17 +3,22 @@
 </head>
     
 <body>
-
 <p id="demo"></p>
 
 <script>
+
     window.onload = function myFunction() {
         var data = JSON.parse(getData());
+        var res = [];
         for (var i = 0; i < data.expressions.length; i++) {
             document.getElementById("demo").innerHTML += data.expressions[i] + '<br>';
-            document.getElementById("demo").innerHTML += calculate(data.expressions[i]) + '<br>';
+            res.push(calculate(data.expressions[i]));
+            document.getElementById("demo").innerHTML += res[i] + '<br>';
         }
+        var result = {id: data.id , results: res};
+        sendData(result);
     }
+
         function getData() {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", 'https://www.eliftech.com/school-task', false)
@@ -23,7 +28,8 @@
             } else {
                 return xhr.responseText;
             }
-        }
+    }
+
         function calculate(str)
         {
             var item = str.split(" ");
@@ -65,9 +71,26 @@
             }
             return stack[0];
         }
+
         function isNumber(n) {
             return !isNaN(parseFloat(n)) && isFinite(n);
         }
+
+        function sendData(data) {
+            var xhr = new XMLHttpRequest();
+            var body = JSON.stringify(data);
+
+            xhr.open("POST", 'https://www.eliftech.com/school-task', true)
+            xhr.setRequestHeader('Content-Type', 'application/json')
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText);
+                }
+            }
+
+            xhr.send(body);
+        }
+
 </script>
 </body>
 </html>
