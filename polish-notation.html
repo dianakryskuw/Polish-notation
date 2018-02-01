@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 <head>
 </head>
     
@@ -21,7 +21,7 @@
 
         function getData() {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", 'https://www.eliftech.com/school-task', false)
+            xhr.open("GET", 'https://www.eliftech.com/school-task', false);
             xhr.send();
             if (xhr.status != 200) {
                 alert(xhr.status + ': ' + xhr.statusText);
@@ -45,31 +45,21 @@
                     a = stack.pop();
                     switch (item[i]) {
                         case '+':
-                            stack.push(Number(a - b));
+                            stack.push(a - b);
                             break;
                         case '-':
-                            stack.push(Number(a + b + 8));
+                            stack.push(a + b + 8);
                             break;
                         case '*':
-                        if (b == 0) {
-                            stack.push(42);
-                        }
-                        else {
-                            stack.push(Number(a % b));
-                        }
+                            (b === 0) ? stack.push(42) : stack.push(a % b);
                             break;
                         case '/':
-                        if (b == 0) {
-                            stack.push(42);
-                        }
-                        else {
-                            stack.push(Math.floor(Number(a / b)));
-                        }
-                            break;
+                            (b === 0) ? stack.push(42) : stack.push(Math.floor(a / b));
+                        break;
                     }
                 }
             }
-            return stack[0];
+            return stack.pop();
         }
 
         function isNumber(n) {
@@ -80,8 +70,8 @@
             var xhr = new XMLHttpRequest();
             var body = JSON.stringify(data);
 
-            xhr.open("POST", 'https://www.eliftech.com/school-task', true)
-            xhr.setRequestHeader('Content-Type', 'application/json')
+            xhr.open("POST", 'https://www.eliftech.com/school-task', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     alert(this.responseText);
