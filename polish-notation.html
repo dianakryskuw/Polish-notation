@@ -51,7 +51,7 @@
                             stack.push(a + b + 8);
                             break;
                         case '*':
-                            (b === 0) ? stack.push(42) : stack.push(a % b);
+                            (b === 0) ? stack.push(42) : stack.push((a-Math.floor(a/b)*b));
                             break;
                         case '/':
                             (b === 0) ? stack.push(42) : stack.push(Math.floor(a / b));
